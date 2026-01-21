@@ -1,0 +1,27 @@
+{% extends "user_app/base.html" %}
+{% block title %} {{ product.name }} {% endblock title %}
+{% block content %}
+<div class" ">
+    <a class="btn btn-primary" href="{% url 'products' %}">Back</a>
+</div>
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-5">
+      <img src="{{ product.image.url }}" class="img-fluid rounded">
+    </div>
+
+    <div class="col-md-7">
+      <h2>{{ product.name }}</h2>
+      <p class="text-white">{{ product.category }}</p>
+      <h3 class="text-success">₹ {{ product.price }}</h3>
+      <p>{{ product.description }}</p>
+
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary btn-lg mt-3">
+        Add to Cart
+      </a>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

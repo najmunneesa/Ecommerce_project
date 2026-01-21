@@ -1,0 +1,26 @@
+{% extends 'user_app/base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="row justify-content-center w-100">
+  <div class="col-md-5">
+    <div class="galss-card p-4 mb-3">
+      <h2 class="form-title text-center mb-3 text-white">LOGIN</h2>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <input type="text" name="username" class="form-control" placeholder="Username">
+        </div>
+        <div class="mb-3">
+          <input type="password" name="password" class="form-control" placeholder="Password">
+        </div>
+        <button class="btn btn-primary w-100">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+

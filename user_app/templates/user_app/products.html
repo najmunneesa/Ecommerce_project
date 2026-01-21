@@ -1,0 +1,28 @@
+{% extends 'user_app/base.html' %}
+{% load static %}
+{% block title %}Products{% endblock %}
+{% block content %}
+  <h3>Products</h3>
+  <div class="d-flex flex-wrap gap-3 p-3">
+  {% for p in products %}
+  <a href="{% url 'product_details' p.id %}">
+    <div class="card" style="flex : 1 1 200px; max-width:250px;">
+      {% if p.image %}
+      <img src="{{ p.image.url }}" class="card-img-top" style="height:160px;object-fit:cover;">
+      {% else %}
+      <img src="{% static 'user_app/images/no-image.png' %}" class="card-img-top" style="height:160px;object-fit:cover;">
+      {% endif %}
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ p.name }}</h5>
+        <p class="card-text">₹ {{ p.price }}</p>
+        <div class="mt-auto">
+          <a href="{% url 'add_to_cart' p.id %}" class="btn btn-primary w-100">Add to cart</a>
+        </div>
+      </div>
+    </div>
+  </a>
+  {% empty %}
+  <p>No products yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

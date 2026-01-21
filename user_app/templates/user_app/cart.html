@@ -1,0 +1,47 @@
+{% extends 'user_app/base.html' %}
+{% block title %}Cart{% endblock %}
+{% block content %}
+  <h3 class="text-center">Your Cart</h3>
+  {% if cart_items %}
+  <div class="d-flex justify-content-center mt-4 ">
+    <div class="">
+      <table class="table-glass-card text-center align-middle mb-0" style="height:100%;">
+      <thead>
+        <tr style="height:60px;"><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th><th>    </th></tr>
+      </thead>
+      <tbody>
+      {% for item in cart_items %}
+        <tr style="height:80px;">
+          <td class="row g-3 p-3">
+            <a href="{% url 'product_details' item.product.id %}" class="btn d-flex justify-content-between text-white">
+              <span>{{ item.product.name }}</span>
+              {% if item.product.image %}
+              <span><img src="{{ item.product.image.url }}" style="width:50px; height:50px;"></span>
+              {% endif %}
+            </a>
+          </td>
+          <td>
+            <a href="{% url 'decrease_quantity' item.id %}" class="btn btn-outline-danger btn-sm">−</a>
+            <span class="px-2">{{ item.quantity }}</span>
+            <a href="{% url 'increase_quantity' item.id %}" class="btn btn-outline-success btn-sm">+</a>
+          </td>
+          <td>₹ {{ item.product.price }}</td>
+          <td>₹ {{ item.subtotal }}</td>
+          <td>
+            <a href="{% url 'remove_from_cart' item.id %}" class="btn btn-warning">Remove</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="d-flex justify-content-center gap-3 mt-3">
+  <a href="{% url 'checkout' %}" class="btn btn-warning">Proceed to Checkout</a>
+  <a href="{% url 'products' %}" class="btn btn-success">Shop More</a>
+</div>
+{% else %}
+<p>Your cart is empty.</p>
+<a href="{% url 'products' %}" class="btn btn-primary">Shop now</a>
+{% endif %}
+{% endblock %}

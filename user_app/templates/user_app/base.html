@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Ecommerce{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{
+      background: url("{% static 'user_app/images/background.png' %}");
+      background-size: cover;
+      background-repeat: no-repeat;
+      color:#fff;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: red;
+      color: white;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 50%;
+    }
+    .nav-icon { 
+      width: 24px; 
+      height: 24px; 
+    }
+    .form-control{
+      width:100%;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.15);     
+      backdrop-filter: blur(10px);       
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 12px;
+      border: 1px solid rgba(245, 230, 232, 0.73);
+      box-shadow: 0 8px 24px rgb(86, 70, 70);
+    }
+    label{
+      color : #fff;
+      font-weight:500;
+    }
+    .overlay-image {
+      opacity: 0.40;
+      filter: blur(2px);
+    }
+
+    .table-glass-card {
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.45);
+      display : inline-block;
+    }
+
+    .table-glass-card thead th {
+      background: rgba(255, 255, 255, 0.18);
+      border: none;
+      font-weight: 600;
+    }
+    .table-glass-card th,
+    .table-glass-card td {
+      min-width: 130px;
+    }
+
+
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'user_app/images/icon.png' %}" width="30" height="30" class="d-inline-block align-text-top">
+      Ecom
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item"><a class="nav-link" href="{% url 'products' %}">Products</a></li>
+        {% if request.user.is_authenticated %}
+        <li class="nav-item "><a class="nav-link" href="{% url 'dashboard_user' %}">Dashboard</a></li>
+        {% endif %}
+      </ul>
+
+      <ul class="navbar-nav ms-auto align-items-center">
+        {% if request.user.is_authenticated %}
+          <li class="nav-item me-3">
+            <span class="text-white">{{ request.user.username }}</span>
+          </li>
+          <li class="nav-item position-relative">
+            <a class="nav-link text-white" href="{% url 'cart' %}">
+              <img src="{% static 'user_app/images/cart.png' %}" class="nav-icon" alt="cart">
+              {% if cart_count and cart_count > 0 %}
+              <span class="cart-count">{{ cart_count }}</span>
+              {% endif %}
+            </a>
+          </li><li class="nav-item ms-3"><a class="nav-link text-white" href="{% url 'logout' %}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+
+  {% block content %}{% endblock %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

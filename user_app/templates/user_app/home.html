@@ -1,0 +1,27 @@
+{% extends 'user_app/base.html' %}
+{% load static %}
+{% block title %}Home | Ecommerce{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="overlay-image-container col-md-8">
+      <img src="{% static 'user_app/images/image.png' %}" class="overlay-image img-fluid" alt="banner">
+    </div>
+    <div class="col-md-4 -3">
+      {% if request.user.is_authenticated %}
+      <h4>Welcome, {{ request.user.username }}</h4>
+      <p><a href="{% url 'products' %}" class="btn btn-primary">Shop Products</a></p>
+      {% else %}
+      <div class="glass-card p-4 rounded shadow-sm">
+        <h2 class="form-title text-center text-white mb-3">LOGIN</h2>
+        <form action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <input type="text" class="form-control mb-3" name="username" placeholder="Username">
+          <input type="password" class="form-control mb-3" name="password" placeholder="Password">
+          <input type="submit" class="btn btn-primary w-100" value="LOGIN">
+        </form>
+        <a href="{% url 'register' %}">New User?</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
